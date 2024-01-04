@@ -65,10 +65,12 @@ class ViewModel: ViewModel() {
                     val following = response.body()
                     _followingList.postValue(following)
                 } else {
+                    Log.e("FetchFollowing", "Unsuccessful response: ${response.code()}")
                     _followingList.postValue(emptyList())
                 }
             } catch (e: Exception) {
-                Log.e("Exception", e.message.toString())
+                Log.e("FetchFollowing", "Exception: ${e.message}")
+                _followingList.postValue(emptyList())
             }
         }
     }

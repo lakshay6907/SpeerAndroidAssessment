@@ -1,6 +1,7 @@
 package com.example.speerandroidassessment.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.service.autofill.Dataset
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.example.speerandroidassessment.Data.GithubUser
+import com.example.speerandroidassessment.Followers
+import com.example.speerandroidassessment.Following
 import com.example.speerandroidassessment.R
 
-class UserAdapter(private val context: Context, private var dataset: List<GithubUser>):
+class UserAdapter(private val context: Context, private var dataset: List<GithubUser>, private val username: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -46,6 +49,19 @@ class UserAdapter(private val context: Context, private var dataset: List<Github
             viewholder.Description.text = it.bio
             viewholder.followers.text = it.followers.toString()
             viewholder.following.text = it.following.toString()
+
+            viewholder.followers.setOnClickListener{
+                val context = holder.itemView.context
+                val intent = Intent(context, Followers::class.java)
+                intent.putExtra("USERNAME_EXTRA", username)
+                context.startActivity(intent)
+            }
+            viewholder.following.setOnClickListener{
+                val context = holder.itemView.context
+                val intent = Intent(context, Following::class.java)
+                intent.putExtra("USERNAME_EXTRA", username)
+                context.startActivity(intent)
+            }
         }
     }
     private fun setImage(context: Context, thumbnail: String, imageView: ImageView) {

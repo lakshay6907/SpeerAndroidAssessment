@@ -1,5 +1,6 @@
 package com.example.speerandroidassessment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,14 +25,13 @@ class MainActivity : AppCompatActivity() {
         val usernameEditText: EditText = findViewById(R.id.username)
         val searchButton: Button = findViewById(R.id.submitbutton)
 
-
         searchButton.setOnClickListener {
             Log.d("SubmitButoon", "Button is clicked")
             val username = usernameEditText.text.toString()
             if (username.isNotEmpty()) {
                 viewModel.fetchUser(username)
                 val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-                adapter = UserAdapter(this, emptyList()) // Initially set an empty list
+                adapter = UserAdapter(this, emptyList(), username) // Initially set an empty list
                 recyclerView.layoutManager = LinearLayoutManager(this)
                 recyclerView.adapter = adapter
 
@@ -46,6 +46,5 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }
